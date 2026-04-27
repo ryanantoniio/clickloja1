@@ -8,8 +8,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Loja 923 - Tudo Camisas', style: TextStyle(color: Colors.black)),
-        backgroundColor: Colors.white,
+        title: const Text('ClickLoja - Início', style: TextStyle(color: Colors.black54)),
+        backgroundColor: Colors.white54,
         elevation: 0,
       ),
       body: ListView(
@@ -19,12 +19,12 @@ class HomeScreen extends StatelessWidget {
             context,
             'Camisa Seleção Brasileira',
             'R\$ 49,99',
-            Colors.yellow,
+            Colors.blueAccent,
           ),
           const SizedBox(height: 16),
           _buildProdutoCard(
             context,
-            'Shorts Cinza Masculino',
+            'Shorts Masculino',
             'R\$ 29,99',
             Colors.grey,
           ),

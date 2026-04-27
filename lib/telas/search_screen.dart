@@ -11,7 +11,7 @@ class SearchScreen extends StatelessWidget {
         elevation: 0,
         title: TextField(
           decoration: InputDecoration(
-            hintText: 'que você procura?',
+            hintText: 'O que você procura?',
             prefixIcon: const Icon(Icons.search, color: Colors.grey),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
@@ -36,9 +36,9 @@ class SearchScreen extends StatelessWidget {
               child: ListView(
                 children: const [
                   ListTile(leading: Icon(Icons.book), title: Text('A metamorfose - Franz Kafka')),
-                  ListTile(leading: Icon(Icons.tv), title: Text("Monitor 24'")),
+                  ListTile(leading: Icon(Icons.tv), title: Text("Monitor 24' AOC")),
                   ListTile(leading: Icon(Icons.checkroom), title: Text('Camisa Brasil Masculina')),
-                  ListTile(leading: Icon(Icons.headphones), title: Text('Fone bluetooth Phillips')),
+                  ListTile(leading: Icon(Icons.headphones), title: Text('Fone Bluetooth Phillips')),
                 ],
               ),
             ),
