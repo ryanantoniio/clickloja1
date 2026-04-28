@@ -52,8 +52,7 @@ class _CartScreenState extends State<CartScreen> {
               ),
               title: Text(item['titulo'], style: const TextStyle(fontWeight: FontWeight.bold)),
               subtitle: Text('Quantidade: ${item['quantidade']}'),
-              trailing: Text(item['preco'], style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold, fontSize: 16)),
-            ),
+              trailing: Text(item['preco'], style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold, fontSize: 16)),),
           );
         }
       ),
