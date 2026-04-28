@@ -124,17 +124,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 backgroundColor: Colors.blue,
               ),
               onPressed: () {
-                // quando clicar adiciona os produtos na lista global
-                setState(() {
-                  carrinhoGlobal.add({
-                    'titulo': widget.titulo,
-                    'preco': widget.preco,
-                    'quantidade': 1, // so se a quantidade de produtos for adicionada na tela
-                  });
-                });
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Produto adicionado ao carrinho!')),
-                );
               },
               child: const Text('Adicionar ao Carrinho', style: TextStyle(fontSize: 18, color: Colors.white)),
             ),

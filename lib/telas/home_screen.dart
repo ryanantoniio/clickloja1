@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
         // icone de carrinho ao lado do nome
         actions: [
           IconButton(
-            icon: const Icon(Icons.shopping_bag, color: Colors.black54),
+            icon: const Icon(Icons.notifications, color: Colors.black54),
             onPressed: (){
             },
           ),

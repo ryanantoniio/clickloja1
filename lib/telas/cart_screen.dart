@@ -22,7 +22,7 @@ class _CartScreenState extends State<CartScreen> {
       ? Center(
         // se sim, mostra a tela de vazio
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center, //alinha de forma vertical
           children: const [
             Icon(Icons.shopping_cart_outlined, size: 80, color: Colors.grey),
             SizedBox(height: 16),
