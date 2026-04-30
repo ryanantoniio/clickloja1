@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'cart_screen.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final String titulo;

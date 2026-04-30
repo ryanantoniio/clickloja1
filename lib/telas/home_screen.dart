@@ -8,7 +8,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ClickLoja - Início', style: TextStyle(color: Colors.black54)),
+        title: const Text('ClickLoja - Início', style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.white54,
         elevation: 0,
 
@@ -32,13 +32,13 @@ class HomeScreen extends StatelessWidget {
             context,
             'Camisa Seleção Brasileira',
             'R\$ 49,99',
-            'https://images.tcdn.com.br/img/img_prod/690558/camisa_selecao_brasileira_i_2022_torcedor_nike_masculina_amarela_3012_1_eec12ed4121b1f6db2256da6f2bc8f8c.jpg',
+            'https://images.tcdn.com.br/img/img_prod/1044362/camisa_futebol_brasil_copa_do_mundo_2026_ii_torced_1_20260115102624_75150200e531.jpg',
           ),
           _buildProdutoCard(
             context,
             'Shorts Masculino',
             'R\$ 29,99',
-            'https://img.ltwebstatic.com/images3_pi/2021/08/09/1628495047f3f1e98031d200fc01e237db8754b2c1_thumbnail_600x.webp',
+            'https://images.tcdn.com.br/img/img_prod/680475/shorts_moletom_no_future_cinza_5022_4_b4c80e165a1a84c891c85760070f28ce_20230614160803.jpg',
           ),
         ],
       ),

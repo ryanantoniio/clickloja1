@@ -14,7 +14,7 @@ class SearchScreen extends StatelessWidget {
             hintText: 'O que você procura?',
             prefixIcon: const Icon(Icons.search, color: Colors.grey),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(40),
               borderSide: BorderSide.none,
             ),
             filled: true,
