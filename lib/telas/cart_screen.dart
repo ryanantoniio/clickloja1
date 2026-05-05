@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CartScreen extends StatelessWidget {
-  const CartScreen({Key? key}) : super(key: key);
+  const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +47,7 @@ class CartScreen extends StatelessWidget {
                 width: 80,
                 height: 80,
                 fit: BoxFit.cover,
-                // A SOLUÇÃO DO ERRO VISUAL ESTÁ AQUI:
-                // Se o link der erro 404, ele desenha um quadrado cinza com um ícone,
-                // mantendo as medidas exatas de 80x80 e impedindo o overflow!
+
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
                     width: 80,

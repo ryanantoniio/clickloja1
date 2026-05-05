@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'product_detail_screen.dart';
-
+import 'notification_screen.dart';
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,11 +12,15 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.white54,
         elevation: 0,
 
-        // icone de carrinho ao lado do nome
+        // icone de sino ao lado do nome
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications, color: Colors.black54),
             onPressed: (){
+              Navigator.push(
+                context, MaterialPageRoute(builder: (context) => const NotificationScreen(),
+              ),
+              );
             },
           ),
         ],
