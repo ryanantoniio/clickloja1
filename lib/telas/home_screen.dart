@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.white54,
         elevation: 0,
 
-        // icone de sino ao lado do nome
+
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications, color: Colors.black54),
@@ -64,20 +64,18 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // pra imagem ocupar o maximo de espaco
             Expanded(
                 child: ClipRRect(
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                   child: Image.network(
-                    url, // usa  a url da imagem passada no metodo
+                    url,
                     width: double.infinity,
-                    fit: BoxFit.cover, // garante que a imagem vai preencher todo o espaco
+                    fit: BoxFit.cover,
                     loadingBuilder: (context, child, loadingProgress){
                       if (loadingProgress == null) return child; // se carregou vai mostrar a imagem
                       return const Center(child: CircularProgressIndicator()); // se nao vai mostrar o circulo girando
                     },
                     errorBuilder: (context, error, stackTrace){
-                      // se der erro mostra o icone de foto
                       return const Center(child: Icon(Icons.image, size: 50, color: Colors.grey));
                     },
                   ),

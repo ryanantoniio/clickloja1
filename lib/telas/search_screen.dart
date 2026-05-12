@@ -1,49 +1,54 @@
 import 'package:flutter/material.dart';
 
-class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
+void main() {
+  runApp(const MaterialApp(
+    home: TelaPesquisa(),
+    debugShowCheckedModeBanner: false,
+  ));
+}
+
+class TelaPesquisa extends StatelessWidget {
+  const TelaPesquisa({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // 1. Barra de cima com o campo de texto
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: TextField(
+        title: const TextField(
           decoration: InputDecoration(
-            hintText: 'O que você procura?',
-            prefixIcon: const Icon(Icons.search, color: Colors.grey),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(40),
-              borderSide: BorderSide.none,
-            ),
-            filled: true,
-            fillColor: Colors.grey[200],
+            hintText: 'Pesquisar roupas...',
+            prefixIcon: Icon(Icons.search),
+            border: InputBorder.none, // Remove a linha feia debaixo do texto
           ),
         ),
+        backgroundColor: Colors.white,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Itens em destaque',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: ListView(
-                children: const [
-                  ListTile(leading: Icon(Icons.book), title: Text('A metamorfose - Franz Kafka')),
-                  ListTile(leading: Icon(Icons.tv), title: Text("Monitor 24' AOC")),
-                  ListTile(leading: Icon(Icons.checkroom), title: Text('Camisa Brasil Masculina')),
-                  ListTile(leading: Icon(Icons.headphones), title: Text('Fone Bluetooth Phillips')),
-                ],
-              ),
-            ),
-          ],
-        ),
+
+      // 2. O corpo da tela com uma lista simples
+      body: ListView(
+        padding: const EdgeInsets.all(20),
+        children: const [
+          Text(
+            "Sugestões",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 10), // Espaço entre o título e a lista
+
+          // Itens da lista (Repita este bloco para criar mais itens)
+          ListTile(
+            leading: Icon(Icons.star),
+            title: Text("Tênis de Corrida"),
+          ),
+          ListTile(
+            leading: Icon(Icons.star),
+            title: Text("Camisa de Time"),
+          ),
+          ListTile(
+            leading: Icon(Icons.star),
+            title: Text("Shorts Térmico"),
+          ),
+        ],
       ),
     );
   }

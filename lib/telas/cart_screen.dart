@@ -15,7 +15,7 @@ class CartScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         children: [
           _buildCartItem(
-            'Camisa Seleção Brasileira',
+            'Camisa Seleção Brasileira nnbvhjfh jhf hj fjhf jhfjhf ghf ghd ghfjhfhk fhgdg j jhf jgf jhf jhfjh fj',
             'R\$ 49,99',
             'https://images.tcdn.com.br/img/img_prod/1044362/camisa_futebol_brasil_copa_do_mundo_2026_ii_torced_1_20260115102624_75150200e531.jpg',
           ),
@@ -59,7 +59,7 @@ class CartScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(width: 16),
+             const SizedBox(width: 16),
 
             Expanded(
               child: Column(
@@ -69,7 +69,7 @@ class CartScreen extends StatelessWidget {
                     titulo,
                     style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
+                    maxLines: 1,
                   ),
                   const SizedBox(height: 8),
                   Text(

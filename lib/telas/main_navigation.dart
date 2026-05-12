@@ -16,7 +16,7 @@ class _MainNavigationState extends State<MainNavigation> {
 
   final List<Widget> _telas = [
     const HomeScreen(),
-    const SearchScreen(),
+    const TelaPesquisa(),
     const CartScreen(),
     const ProfileScreen(),
   ];
