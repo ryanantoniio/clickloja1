@@ -8,5 +8,5 @@
     required this.urlImagem,
     required this.nomeImagem,
     required this.preco,
- })
+ });
  }
