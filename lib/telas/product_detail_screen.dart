@@ -1,45 +1,57 @@
 import 'package:flutter/material.dart';
 
-class ProductDetailScreen extends StatefulWidget {
+void main() {
+  runApp(
+    const MaterialApp(
+      // Adicionado os parâmetros obrigatórios aqui
+      home: ProductDetailScreen(
+        titulo: "Camisa Seleção Brasileira",
+        preco: "R\$ 49,99",
+      ),
+      debugShowCheckedModeBanner: false,
+    ),
+  );
+}
+
+class ProductDetailScreen extends StatelessWidget {
+  // 1. Declarar as variáveis finais na classe
   final String titulo;
   final String preco;
 
-  const ProductDetailScreen({Key? key, required this.titulo, required this.preco}) : super(key: key);
-
-  @override
-  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
-}
-
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
-  int corSelecionada = 0;
-  int tamanhoSelecionado = 1;
+  const ProductDetailScreen({
+    super.key,
+    // 2. Usar 'this.titulo' e 'this.preco' no construtor
+    required this.titulo,
+    required this.preco,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detalhes do Produto', style: TextStyle(color: Colors.black)),
+        title: const Text("Detalhes do Produto"),
         backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Colors.black),
+        foregroundColor: Colors.black,
         elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               height: 250,
-              decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(12)
-              ),
-              child: const Center(child: Icon(Icons.image, size: 100, color: Colors.grey)),
+              width: double.infinity,
+              color: Colors.grey[300],
+              child: const Icon(Icons.image, size: 100, color: Colors.grey),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
 
-            Text(widget.titulo, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
+            // 3. (Opcional) Usar a variável 'titulo' aqui em vez de texto fixo
+            Text(
+              titulo,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
 
             const Row(
               children: [
@@ -47,84 +59,64 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 Icon(Icons.star, color: Colors.amber, size: 20),
                 Icon(Icons.star, color: Colors.amber, size: 20),
                 Icon(Icons.star, color: Colors.amber, size: 20),
-                Icon(Icons.star_half, color: Colors.amber, size: 20),
-                SizedBox(width: 8),
-                Text('4.8', style: TextStyle(fontWeight: FontWeight.bold)),
+                Icon(Icons.star, color: Colors.amber, size: 20),
+                SizedBox(width: 10),
+                Text("4.8", style: TextStyle(fontSize: 16)),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
 
-            Text(widget.preco, style: const TextStyle(fontSize: 22, color: Colors.green, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 24),
-
-            const Text('Cor', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            GestureDetector(
-              onTap: (){
-                // aqui avisamos ao flutter que essa cor foi clicada
-                setState(() { corSelecionada = 0; });
-              },
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    shape: BoxShape.circle, // deixa redondo
-                    // caso seja selecionado cria uma borda
-                    border: corSelecionada == 0
-                        ? Border.all(color: Colors.blue, width: 2)
-                        : null,
-                  ),
-                  child: corSelecionada == 0
-                      ? const Icon(Icons.check, color: Colors.white)
-                      : null,
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-
-            const Text('Tamanho', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            GestureDetector(
-              onTap: () {
-                setState(() { tamanhoSelecionado = 1; });
-              },
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  width: 50,
-                  height: 50,
-                  alignment: Alignment.center, // Centraliza a letra "M"
-                  decoration: BoxDecoration(
-                    // Se selecionado, fundo roxo. Se não, fundo branco.
-                    color: tamanhoSelecionado == 1 ? Colors.blue : Colors.white,
-                    borderRadius: BorderRadius.circular(12), // Deixa as pontas redondas
-                    border: Border.all(color: Colors.grey.shade300),
-                  ),
-                  child: Text(
-                    'M',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      // Se selecionado, letra branca. Se não, letra preta.
-                      color: tamanhoSelecionado == 1 ? Colors.white : Colors.black,
-                    ),
-                  ),
-                ),
+            // 4. (Opcional) Usar a variável 'preco' aqui em vez de texto fixo
+            Text(
+              preco,
+              style: const TextStyle(
+                fontSize: 22,
+                color: Colors.green,
+                fontWeight: FontWeight.bold,
               ),
             ),
 
-            const Spacer(), // Empurra o botão lá para o final da tela
+            const SizedBox(height: 20),
 
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(16),
-                backgroundColor: Colors.blue,
+            const Text("Cor", style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 10),
+            Container(
+              padding: const EdgeInsets.all(4),
+              decoration: const BoxDecoration(
+                color: Colors.blue,
+                shape: BoxShape.circle,
               ),
-              onPressed: () {
-              },
-              child: const Text('Adicionar ao Carrinho', style: TextStyle(fontSize: 18, color: Colors.white)),
+              child: const Icon(Icons.check, color: Colors.white, size: 20),
+            ),
+
+            const SizedBox(height: 20),
+
+            const Text(
+              "Tamanho",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Center(
+                child: Text("M", style: TextStyle(color: Colors.white)),
+              ),
+            ),
+
+            const Spacer(),
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
+                child: const Text("Adicionar ao Carrinho"),
+              ),
             ),
           ],
         ),
