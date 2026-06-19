@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:clickloja1/database/propriedade_dao.dart';
+import 'package:clickloja1/domain/propriedade.dart';
+import 'package:clickloja1/telas/product_detail_screen.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -7,48 +10,71 @@ void main() {
   ));
 }
 
-class TelaPesquisa extends StatelessWidget {
+class TelaPesquisa extends StatefulWidget {
   const TelaPesquisa({super.key});
+
+  @override
+  State<TelaPesquisa> createState() => _TelaPesquisaState();
+}
+
+class _TelaPesquisaState extends State<TelaPesquisa> {
+  String _query = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // 1. Barra de cima com o campo de texto
       appBar: AppBar(
-        title: const TextField(
-          decoration: InputDecoration(
-            hintText: 'Pesquisar roupas...',
+        title: TextField(
+          onChanged: (value) {
+            setState(() {
+              _query = value;
+            });
+          },
+          decoration: const InputDecoration(
+            hintText: 'Pesquisar...',
             prefixIcon: Icon(Icons.search),
-            border: InputBorder.none, // Remove a linha feia debaixo do texto
+            border: InputBorder.none,
           ),
         ),
         backgroundColor: Colors.white,
       ),
+      body: FutureBuilder<List<Propriedade>>(
+        future: PropriedadeDao().pesquisarPropriedades(_query),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return const Center(child: Text("Erro ao buscar produtos."));
+          }
 
-      // 2. O corpo da tela com uma lista simples
-      body: ListView(
-        padding: const EdgeInsets.all(20),
-        children: const [
-          Text(
-            "Sugestões",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 10), // Espaço entre o título e a lista
+          List<Propriedade> resultados = snapshot.data ?? [];
 
-          // Itens da lista (Repita este bloco para criar mais itens)
-          ListTile(
-            leading: Icon(Icons.star),
-            title: Text("Tênis de Corrida"),
-          ),
-          ListTile(
-            leading: Icon(Icons.star),
-            title: Text("Camisa de Time"),
-          ),
-          ListTile(
-            leading: Icon(Icons.star),
-            title: Text("Shorts Térmico"),
-          ),
-        ],
+          if (resultados.isEmpty) {
+            return const Center(child: Text("Nenhum produto encontrado."));
+          }
+
+          return ListView.builder(
+            padding: const EdgeInsets.all(20),
+            itemCount: resultados.length,
+            itemBuilder: (context, index) {
+              Propriedade p = resultados[index];
+              return ListTile(
+                leading: const Icon(Icons.shopping_bag),
+                title: Text(p.titulo),
+                subtitle: Text(p.preco, style: const TextStyle(color: Colors.green)),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProductDetailScreen(propriedade: p),
+                    ),
+                  );
+                },
+              );
+            },
+          );
+        },
       ),
     );
   }

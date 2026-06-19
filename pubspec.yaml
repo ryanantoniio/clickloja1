@@ -31,8 +31,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+
   cupertino_icons: ^1.0.8
-  sqflite: ^2.3.3  # Use a versão mais recente
+  sqflite:
+  path:
 
 dev_dependencies:
   flutter_test:

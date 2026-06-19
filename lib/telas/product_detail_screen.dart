@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 
+import 'package:clickloja1/domain/propriedade.dart';
+import 'package:clickloja1/database/carrinho_dao.dart';
+
 void main() {
   runApp(
-    const MaterialApp(
-      // Adicionado os parâmetros obrigatórios aqui
+    MaterialApp(
       home: ProductDetailScreen(
-        titulo: "Camisa Seleção Brasileira",
-        preco: "R\$ 49,99",
+        propriedade: Propriedade(
+          titulo: "Camisa Seleção Brasileira",
+          preco: "R\$ 49,99",
+          url: "",
+        ),
       ),
       debugShowCheckedModeBanner: false,
     ),
@@ -14,15 +19,11 @@ void main() {
 }
 
 class ProductDetailScreen extends StatelessWidget {
-  // 1. Declarar as variáveis finais na classe
-  final String titulo;
-  final String preco;
+  final Propriedade propriedade;
 
   const ProductDetailScreen({
     super.key,
-    // 2. Usar 'this.titulo' e 'this.preco' no construtor
-    required this.titulo,
-    required this.preco,
+    required this.propriedade,
   });
 
   @override
@@ -43,13 +44,16 @@ class ProductDetailScreen extends StatelessWidget {
               height: 250,
               width: double.infinity,
               color: Colors.grey[300],
-              child: const Icon(Icons.image, size: 100, color: Colors.grey),
+              child: Image.network(
+                propriedade.url,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => const Icon(Icons.image, size: 100, color: Colors.grey),
+              ),
             ),
             const SizedBox(height: 20),
 
-            // 3. (Opcional) Usar a variável 'titulo' aqui em vez de texto fixo
             Text(
-              titulo,
+              propriedade.titulo,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
 
@@ -66,9 +70,8 @@ class ProductDetailScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
 
-            // 4. (Opcional) Usar a variável 'preco' aqui em vez de texto fixo
             Text(
-              preco,
+              propriedade.preco,
               style: const TextStyle(
                 fontSize: 22,
                 color: Colors.green,
@@ -113,7 +116,12 @@ class ProductDetailScreen extends StatelessWidget {
               width: double.infinity,
               height: 50,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await CarrinhoDao().adicionarProduto(propriedade);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Produto adicionado ao carrinho!')),
+                  );
+                },
                 style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
                 child: const Text("Adicionar ao Carrinho"),
               ),

@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
 
-class CartScreen extends StatelessWidget {
+import 'package:clickloja1/database/carrinho_dao.dart';
+import 'package:clickloja1/domain/propriedade.dart';
+
+class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  void _carregarCarrinho() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,28 +23,36 @@ class CartScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16.0),
-        children: [
-          _buildCartItem(
-            'Camisa Seleção Brasileira nnbvhjfh jhf hj fjhf jhfjhf ghf ghd ghfjhfhk fhgdg j jhf jgf jhf jhfjh fj',
-            'R\$ 49,99',
-            'https://images.tcdn.com.br/img/img_prod/1044362/camisa_futebol_brasil_copa_do_mundo_2026_ii_torced_1_20260115102624_75150200e531.jpg',
-          ),
+      body: FutureBuilder<List<Propriedade>>(
+        future: CarrinhoDao().listarCarrinho(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return const Center(child: Text("Erro ao carregar o carrinho."));
+          }
+          
+          List<Propriedade> propriedades = snapshot.data ?? [];
 
-          const SizedBox(height: 12),
+          if (propriedades.isEmpty) {
+            return const Center(child: Text("Seu carrinho está vazio."));
+          }
 
-          _buildCartItem(
-            'Shorts Masculino',
-            'R\$ 29,99',
-            'https://images.tcdn.com.br/img/img_prod/680475/shorts_moletom_no_future_cinza_5022_4_b4c80e165a1a84c891c85760070f28ce_20230614160803.jpg',
-          ),
-        ],
+          return ListView.builder(
+            padding: const EdgeInsets.all(16.0),
+            itemCount: propriedades.length,
+            itemBuilder: (context, index) {
+              Propriedade p = propriedades[index];
+              return _buildCartItem(p.titulo, p.preco, p.url, p.id);
+            },
+          );
+        },
       ),
     );
   }
 
-  Widget _buildCartItem(String titulo, String preco, String url) {
+  Widget _buildCartItem(String titulo, String preco, String url, int? id) {
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -79,6 +99,15 @@ class CartScreen extends StatelessWidget {
                 ],
               ),
             ),
+
+            if (id != null)
+              IconButton(
+                icon: const Icon(Icons.delete, color: Colors.red),
+                onPressed: () async {
+                  await CarrinhoDao().removerProduto(id);
+                  _carregarCarrinho();
+                },
+              )
           ],
         ),
       ),

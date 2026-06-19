@@ -1,18 +1,15 @@
+class Propriedade {
+  int? id;
+  late String titulo;
+  late String preco;
+  late String url;
 
- class Propriedade {
-  String titulo;
-  String preco;
-  String url;
+  Propriedade({this.id, required this.titulo, required this.preco, required this.url});
 
-  Propriedade({
-    required this.titulo,
-    required this.preco,
-    required this.url,
- });
-
-  Propriedade.fromJson(Map<String, dynamic> json)
-    : titulo = json['titulo'].toString(),
-      preco = json['preco'].toString(),
-      url = json['url'];
-
- }
+  Propriedade.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    titulo = json['titulo'];
+    preco = json['preco'];
+    url = json['url'];
+  }
+}
