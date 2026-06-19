@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'package:clickloja1/database/carrinho_dao.dart';
-import 'package:clickloja1/domain/propriedade.dart';
+import 'package:clickloja1/database/produto_dao.dart';
+import 'package:clickloja1/domain/produto.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -11,20 +10,19 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  void _carregarCarrinho() {
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Meu Carrinho', style: TextStyle(color: Colors.black)),
+        title: const Text(
+          'Meu Carrinho',
+          style: TextStyle(color: Colors.black),
+        ),
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: FutureBuilder<List<Propriedade>>(
-        future: CarrinhoDao().listarCarrinho(),
+      body: FutureBuilder<List<Produto>>(
+        future: ProdutoDao().listarCarrinho(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -32,18 +30,18 @@ class _CartScreenState extends State<CartScreen> {
           if (snapshot.hasError) {
             return const Center(child: Text("Erro ao carregar o carrinho."));
           }
-          
-          List<Propriedade> propriedades = snapshot.data ?? [];
 
-          if (propriedades.isEmpty) {
+          List<Produto> produtos = snapshot.data ?? [];
+
+          if (produtos.isEmpty) {
             return const Center(child: Text("Seu carrinho está vazio."));
           }
 
           return ListView.builder(
             padding: const EdgeInsets.all(16.0),
-            itemCount: propriedades.length,
+            itemCount: produtos.length,
             itemBuilder: (context, index) {
-              Propriedade p = propriedades[index];
+              Produto p = produtos[index];
               return _buildCartItem(p.titulo, p.preco, p.url, p.id);
             },
           );
@@ -73,13 +71,16 @@ class _CartScreenState extends State<CartScreen> {
                     width: 80,
                     height: 80,
                     color: Colors.grey[200],
-                    child: const Icon(Icons.image_not_supported, color: Colors.grey),
+                    child: const Icon(
+                      Icons.image_not_supported,
+                      color: Colors.grey,
+                    ),
                   );
                 },
               ),
             ),
 
-             const SizedBox(width: 16),
+            const SizedBox(width: 16),
 
             Expanded(
               child: Column(
@@ -87,27 +88,25 @@ class _CartScreenState extends State<CartScreen> {
                 children: [
                   Text(
                     titulo,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
                   const SizedBox(height: 8),
                   Text(
                     preco,
-                    style: const TextStyle(color: Colors.green, fontSize: 16, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      color: Colors.green,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
             ),
-
-            if (id != null)
-              IconButton(
-                icon: const Icon(Icons.delete, color: Colors.red),
-                onPressed: () async {
-                  await CarrinhoDao().removerProduto(id);
-                  _carregarCarrinho();
-                },
-              )
           ],
         ),
       ),

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:clickloja1/domain/propriedade.dart';
-import 'package:clickloja1/database/carrinho_dao.dart';
+import 'package:clickloja1/domain/produto.dart';
+import 'package:clickloja1/database/produto_dao.dart';
 
 void main() {
   runApp(
     MaterialApp(
       home: ProductDetailScreen(
-        propriedade: Propriedade(
+        produto: Produto(
           titulo: "Camisa Seleção Brasileira",
           preco: "R\$ 49,99",
           url: "",
@@ -19,11 +19,11 @@ void main() {
 }
 
 class ProductDetailScreen extends StatelessWidget {
-  final Propriedade propriedade;
+  final Produto produto;
 
   const ProductDetailScreen({
     super.key,
-    required this.propriedade,
+    required this.produto,
   });
 
   @override
@@ -45,7 +45,7 @@ class ProductDetailScreen extends StatelessWidget {
               width: double.infinity,
               color: Colors.grey[300],
               child: Image.network(
-                propriedade.url,
+                produto.url,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) => const Icon(Icons.image, size: 100, color: Colors.grey),
               ),
@@ -53,7 +53,7 @@ class ProductDetailScreen extends StatelessWidget {
             const SizedBox(height: 20),
 
             Text(
-              propriedade.titulo,
+              produto.titulo,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
 
@@ -71,7 +71,7 @@ class ProductDetailScreen extends StatelessWidget {
             const SizedBox(height: 10),
 
             Text(
-              propriedade.preco,
+              produto.preco,
               style: const TextStyle(
                 fontSize: 22,
                 color: Colors.green,
@@ -117,7 +117,7 @@ class ProductDetailScreen extends StatelessWidget {
               height: 50,
               child: ElevatedButton(
                 onPressed: () async {
-                  await CarrinhoDao().adicionarProduto(propriedade);
+                  await ProdutoDao().adicionarProdutoCarrinho(produto);
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Produto adicionado ao carrinho!')),
                   );
@@ -132,3 +132,4 @@ class ProductDetailScreen extends StatelessWidget {
     );
   }
 }
+

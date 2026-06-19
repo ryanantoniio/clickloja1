@@ -1,13 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:clickloja1/database/propriedade_dao.dart';
-import 'package:clickloja1/domain/propriedade.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:clickloja1/database/produto_dao.dart';
+import 'package:clickloja1/domain/produto.dart';
 import 'package:clickloja1/telas/product_detail_screen.dart';
 
 void main() {
-  runApp(const MaterialApp(
-    home: TelaPesquisa(),
-    debugShowCheckedModeBanner: false,
-  ));
+  runApp(
+    const MaterialApp(home: TelaPesquisa(), debugShowCheckedModeBanner: false),
+  );
 }
 
 class TelaPesquisa extends StatefulWidget {
@@ -38,8 +37,8 @@ class _TelaPesquisaState extends State<TelaPesquisa> {
         ),
         backgroundColor: Colors.white,
       ),
-      body: FutureBuilder<List<Propriedade>>(
-        future: PropriedadeDao().pesquisarPropriedades(_query),
+      body: FutureBuilder<List<Produto>>(
+        future: ProdutoDao().pesquisarProdutos(_query),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -48,7 +47,7 @@ class _TelaPesquisaState extends State<TelaPesquisa> {
             return const Center(child: Text("Erro ao buscar produtos."));
           }
 
-          List<Propriedade> resultados = snapshot.data ?? [];
+          List<Produto> resultados = snapshot.data ?? [];
 
           if (resultados.isEmpty) {
             return const Center(child: Text("Nenhum produto encontrado."));
@@ -58,16 +57,19 @@ class _TelaPesquisaState extends State<TelaPesquisa> {
             padding: const EdgeInsets.all(20),
             itemCount: resultados.length,
             itemBuilder: (context, index) {
-              Propriedade p = resultados[index];
+              Produto p = resultados[index];
               return ListTile(
                 leading: const Icon(Icons.shopping_bag),
                 title: Text(p.titulo),
-                subtitle: Text(p.preco, style: const TextStyle(color: Colors.green)),
+                subtitle: Text(
+                  p.preco,
+                  style: const TextStyle(color: Colors.green),
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProductDetailScreen(propriedade: p),
+                      builder: (context) => ProductDetailScreen(produto: p),
                     ),
                   );
                 },
@@ -79,3 +81,4 @@ class _TelaPesquisaState extends State<TelaPesquisa> {
     );
   }
 }
+

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'telas/main_navigation.dart';
 
 void main() {
@@ -22,3 +22,4 @@ class clickloja1 extends StatelessWidget {
     );
   }
 }
+

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:clickloja1/database/propriedade_dao.dart';
-import 'package:clickloja1/domain/propriedade.dart';
+import 'package:clickloja1/database/produto_dao.dart';
+import 'package:clickloja1/domain/produto.dart';
 import 'product_detail_screen.dart';
 import 'notification_screen.dart';
 
@@ -33,8 +33,8 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
 
-      body: FutureBuilder<List<Propriedade>>(
-        future: PropriedadeDao().listarPropriedades(),
+      body: FutureBuilder<List<Produto>>(
+        future: ProdutoDao().listarProdutos(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -43,9 +43,9 @@ class HomeScreen extends StatelessWidget {
             return const Center(child: Text("Erro ao carregar produtos."));
           }
 
-          List<Propriedade> propriedades = snapshot.data ?? [];
+          List<Produto> produtos = snapshot.data ?? [];
 
-          if (propriedades.isEmpty) {
+          if (produtos.isEmpty) {
             return const Center(child: Text("Nenhum produto encontrado."));
           }
 
@@ -57,9 +57,9 @@ class HomeScreen extends StatelessWidget {
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
             ),
-            itemCount: propriedades.length,
+            itemCount: produtos.length,
             itemBuilder: (context, index) {
-              return _buildProdutoCard(context, propriedades[index]);
+              return _buildProdutoCard(context, produtos[index]);
             },
           );
         },
@@ -67,13 +67,13 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProdutoCard(BuildContext context, Propriedade propriedade) {
+  Widget _buildProdutoCard(BuildContext context, Produto produto) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProductDetailScreen(propriedade: propriedade),
+            builder: (context) => ProductDetailScreen(produto: produto),
           ),
         );
       },
@@ -88,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                   top: Radius.circular(12),
                 ),
                 child: Image.network(
-                  propriedade.url,
+                  produto.url,
                   width: double.infinity,
                   fit: BoxFit.cover,
                   loadingBuilder: (context, child, loadingProgress) {
@@ -110,7 +110,7 @@ class HomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    propriedade.titulo,
+                    produto.titulo,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
@@ -119,7 +119,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    propriedade.preco,
+                    produto.preco,
                     style: const TextStyle(
                       color: Colors.green,
                       fontSize: 16,
@@ -135,3 +135,4 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
