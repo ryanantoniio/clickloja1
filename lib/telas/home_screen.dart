@@ -35,15 +35,15 @@ class HomeScreen extends StatelessWidget {
 
       body: FutureBuilder<List<Produto>>(
         future: ProdutoDao().listarProdutos(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+        builder: (context, resultado) {
+          if (resultado.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
-          if (snapshot.hasError) {
+          if (resultado.hasError) {
             return const Center(child: Text("Erro ao carregar produtos."));
           }
 
-          List<Produto> produtos = snapshot.data ?? [];
+          List<Produto> produtos = resultado.data ?? [];
 
           if (produtos.isEmpty) {
             return const Center(child: Text("Nenhum produto encontrado."));

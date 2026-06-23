@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:clickloja1/database/produto_dao.dart';
 import 'package:clickloja1/domain/produto.dart';
 import 'package:clickloja1/telas/product_detail_screen.dart';
@@ -39,15 +39,15 @@ class _TelaPesquisaState extends State<TelaPesquisa> {
       ),
       body: FutureBuilder<List<Produto>>(
         future: ProdutoDao().pesquisarProdutos(_query),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+        builder: (context, resultado) {
+          if (resultado.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
-          if (snapshot.hasError) {
+          if (resultado.hasError) {
             return const Center(child: Text("Erro ao buscar produtos."));
           }
 
-          List<Produto> resultados = snapshot.data ?? [];
+          List<Produto> resultados = resultado.data ?? [];
 
           if (resultados.isEmpty) {
             return const Center(child: Text("Nenhum produto encontrado."));
