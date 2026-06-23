@@ -49,14 +49,8 @@ class HomeScreen extends StatelessWidget {
             return const Center(child: Text("Nenhum produto encontrado."));
           }
 
-          return GridView.builder(
+          return ListView.builder(
             padding: const EdgeInsets.all(16.0),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.7,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
-            ),
             itemCount: produtos.length,
             itemBuilder: (context, index) {
               return _buildProdutoCard(context, produtos[index]);
@@ -78,55 +72,65 @@ class HomeScreen extends StatelessWidget {
         );
       },
       child: Card(
+        margin: const EdgeInsets.only(bottom: 16.0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: Column(
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: ClipRRect(
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(12),
-                ),
-                child: Image.network(
-                  produto.url,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return const Center(child: CircularProgressIndicator());
-                  },
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Center(
+            ClipRRect(
+              borderRadius: const BorderRadius.horizontal(
+                left: Radius.circular(12),
+              ),
+              child: Image.network(
+                produto.url,
+                width: 120,
+                height: 120,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return const SizedBox(
+                    width: 120,
+                    height: 120,
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return const SizedBox(
+                    width: 120,
+                    height: 120,
+                    child: Center(
                       child: Icon(Icons.image, size: 50, color: Colors.grey),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
             ),
-
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    produto.titulo,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      produto.titulo,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    maxLines: 2, // limita o texto a 2 linhas
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    produto.preco,
-                    style: const TextStyle(
-                      color: Colors.green,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                    const SizedBox(height: 8),
+                    Text(
+                      produto.preco,
+                      style: const TextStyle(
+                        color: Colors.green,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
@@ -135,4 +139,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-

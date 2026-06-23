@@ -35,8 +35,6 @@ class ProdutoDao {
     return listaProdutos;
   }
 
-  // --- MÉTODOS DO CARRINHO ---
-
   Future<void> adicionarProdutoCarrinho(Produto p) async {
     Database db = await DBHelper().initDB();
 
@@ -58,4 +56,3 @@ class ProdutoDao {
     return listaProdutos;
   }
 }
-

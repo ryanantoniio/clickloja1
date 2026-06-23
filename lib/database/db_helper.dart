@@ -11,7 +11,7 @@ class DBHelper {
 
     Database db = await openDatabase(
       dbPath,
-      version: 2,
+      version: 3,
       onCreate: onCreateDB,
       onUpgrade: (db, oldVersion, newVersion) async {
         await db.execute('DROP TABLE IF EXISTS PRODUTO');
@@ -23,7 +23,7 @@ class DBHelper {
     String sqlCarrinho = '''
       CREATE TABLE IF NOT EXISTS CARRINHO (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        titulo TEXT,
+        titulo TEXT NOT NULL,
         preco TEXT NOT NULL,
         url TEXT
       );
@@ -37,7 +37,7 @@ class DBHelper {
     String sql = '''
       CREATE TABLE PRODUTO (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        titulo TEXT,
+        titulo TEXT NOT NULL,
         preco TEXT NOT NULL,
         url TEXT
       );
@@ -47,7 +47,7 @@ class DBHelper {
     String sqlCarrinho = '''
       CREATE TABLE CARRINHO (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        titulo TEXT,
+        titulo TEXT NOT NULL,
         preco TEXT NOT NULL,
         url TEXT
       );
@@ -59,15 +59,15 @@ class DBHelper {
     await db.execute(sql);
 
     sql =
-        "INSERT INTO Produto (titulo, preco, url) VALUES ('Shorts Masculino','R\$ 29,99','https://images.tcdn.com.br/img/img_prod/680475/shorts_moletom_no_future_cinza_5022_4_b4c80e165a1a84c891c85760070f28ce_20230614160803.jpg');";
+        "INSERT INTO Produto (titulo, preco, url) VALUES ('Shorts Masculino','R\$ 29,99','https://imgcentauro-a.akamaihd.net/1024x1024/97319703A2.jpg');";
     await db.execute(sql);
 
     sql =
-        "INSERT INTO Produto (titulo, preco, url) VALUES ('Smartphone Galaxy S23','R\$ 3.999,00','https://images.samsung.com/is/image/samsung/p6pim/br/2302/gallery/br-galaxy-s23-s911-sm-s911bzkpzto-534839845?\$650_519_PNG\$');";
+        "INSERT INTO Produto (titulo, preco, url) VALUES ('Smartphone Galaxy S23','R\$ 3.999,00','https://a-static.mlcdn.com.br/280x210/usado-samsung-galaxy-s23-5g-256gb-verde-bom-trocafone/trocafone/97269/435ebe6ee69e1e1c33612d185a6baa76.jpeg');";
     await db.execute(sql);
 
     sql =
-        "INSERT INTO Produto (titulo, preco, url) VALUES ('LEGO Star Wars','R\$ 899,90','https://m.media-amazon.com/images/I/81U41i-KIfL._AC_SL1500_.jpg');";
+        "INSERT INTO Produto (titulo, preco, url) VALUES ('LEGO Star Wars','R\$ 899,90','https://m.media-amazon.com/images/I/71jRnJ0W2CL.jpg');";
     await db.execute(sql);
 
     sql =

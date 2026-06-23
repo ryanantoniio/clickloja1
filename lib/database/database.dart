@@ -12,18 +12,18 @@ class Database {
       titulo: 'Shorts Masculino',
       preco: 'R\$ 29,99',
       url:
-          'https://images.tcdn.com.br/img/img_prod/680475/shorts_moletom_no_future_cinza_5022_4_b4c80e165a1a84c891c85760070f28ce_20230614160803.jpg',
+          'https://imgcentauro-a.akamaihd.net/1024x1024/97319703A2.jpg',
     ),
     Produto(
       titulo: 'Smartphone Galaxy S23',
       preco: 'R\$ 3.999,00',
       url:
-          'https://images.samsung.com/is/image/samsung/p6pim/br/2302/gallery/br-galaxy-s23-s911-sm-s911bzkpzto-534839845.png',
+          'https://a-static.mlcdn.com.br/280x210/usado-samsung-galaxy-s23-5g-256gb-verde-bom-trocafone/trocafone/97269/435ebe6ee69e1e1c33612d185a6baa76.jpeg',
     ),
     Produto(
       titulo: 'LEGO Star Wars',
       preco: 'R\$ 899,90',
-      url: 'https://m.media-amazon.com/images/I/81U41i-KIfL._AC_SL1500_.jpg',
+      url: 'https://m.media-amazon.com/images/I/71jRnJ0W2CL.jpg',
     ),
     Produto(
       titulo: 'Tênis Nike Air Force 1',
