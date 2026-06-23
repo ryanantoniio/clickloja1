@@ -1,4 +1,4 @@
-﻿import 'package:clickloja1/domain/produto.dart';
+import 'package:clickloja1/domain/produto.dart';
 import 'package:flutter/material.dart';
 
 class ContainerProduto extends StatefulWidget {
@@ -18,22 +18,13 @@ class _ContainerProdutoState extends State<ContainerProduto> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  widget.produto.url,
-                  height: 300,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                top: 16,
-                right: 16,
-                child: Icon(Icons.favorite, size: 36, color: Colors.pinkAccent),
-              ),
-            ],
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Image.network(
+              widget.produto.url,
+              height: 300,
+              fit: BoxFit.cover,
+            ),
           ),
 
           SizedBox(height: 8),
@@ -62,4 +53,3 @@ class _ContainerProdutoState extends State<ContainerProduto> {
     );
   }
 }
-
