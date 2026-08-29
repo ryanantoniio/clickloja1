@@ -31,7 +31,7 @@ class _CartScreenState extends State<CartScreen> {
             return const Center(child: Text("Erro ao carregar o carrinho."));
           }
 
-          List<Produto> produtos = resultado.data ?? [];
+          List<Produto> produtos = resultado.data ?? []; //pode vir nulo, por isso ?? []
 
           if (produtos.isEmpty) {
             return const Center(child: Text("Seu carrinho está vazio."));
