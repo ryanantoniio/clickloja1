@@ -1,5 +1,5 @@
-﻿import 'package:flutter/material.dart';
-import 'telas/main_navigation.dart';
+import 'package:flutter/material.dart';
+import 'telas/splash_page.dart';
 
 void main() {
   runApp(const clickloja1());
@@ -18,8 +18,7 @@ class clickloja1 extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.grey[200],
       ),
-      home: const MainNavigation(),
+      home: const SplashPage(),
     );
   }
 }
-

@@ -11,11 +11,12 @@ class DBHelper {
 
     Database db = await openDatabase(
       dbPath,
-      version: 3,
+      version: 4,
       onCreate: onCreateDB,
       onUpgrade: (db, oldVersion, newVersion) async {
         await db.execute('DROP TABLE IF EXISTS PRODUTO');
         await db.execute('DROP TABLE IF EXISTS CARRINHO');
+        await db.execute('DROP TABLE IF EXISTS USER');
         await onCreateDB(db, newVersion);
       },
     );
@@ -73,5 +74,16 @@ class DBHelper {
     sql =
         "INSERT INTO Produto (titulo, preco, url) VALUES ('Tênis Nike Air Force 1','R\$ 799,99','https://imgnike-a.akamaihd.net/768x768/01113751.jpg');";
     await db.execute(sql);
+
+    String sqlUser = '''
+      CREATE TABLE USER (
+        username TEXT PRIMARY KEY,
+        password TEXT
+      );
+    ''';
+    await db.execute(sqlUser);
+
+    await db.execute(
+        "INSERT INTO USER (username, password) VALUES ('teste@gmail.com', '123456');");
   }
 }

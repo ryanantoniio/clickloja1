@@ -167,8 +167,15 @@ class _CartScreenState extends State<CartScreen> {
               ),
             ),
 
-            // Dica visual de que o item é deslizável
-            const Icon(Icons.chevron_left, color: Colors.grey, size: 20),
+            // Botão de remoção do item
+            IconButton(
+              icon: const Icon(Icons.delete_outline, color: Colors.red),
+              onPressed: () {
+                if (id != null) {
+                  _removerItem(id);
+                }
+              },
+            ),
           ],
         ),
       ),
@@ -215,9 +222,7 @@ class _CartScreenState extends State<CartScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Compra finalizada! 🎉')),
-                  );
+                  // TODO: implementar finalização da compra
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
