@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:clickloja1/domain/produto.dart';
-import 'package:clickloja1/database/produto_dao.dart';
+import 'package:clickloja1/database/carrinho_dao.dart';
 
 void main() {
   runApp(
@@ -21,10 +21,7 @@ void main() {
 class ProductDetailScreen extends StatelessWidget {
   final Produto produto;
 
-  const ProductDetailScreen({
-    super.key,
-    required this.produto,
-  });
+  const ProductDetailScreen({super.key, required this.produto});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +44,8 @@ class ProductDetailScreen extends StatelessWidget {
               child: Image.network(
                 produto.url,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => const Icon(Icons.image, size: 100, color: Colors.grey),
+                errorBuilder: (context, error, stackTrace) =>
+                    const Icon(Icons.image, size: 100, color: Colors.grey),
               ),
             ),
             const SizedBox(height: 20),
@@ -117,9 +115,11 @@ class ProductDetailScreen extends StatelessWidget {
               height: 50,
               child: ElevatedButton(
                 onPressed: () async {
-                  await ProdutoDao().adicionarProdutoCarrinho(produto);
+                  await CarrinhoDao().adicionarProdutoCarrinho(produto);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Produto adicionado ao carrinho!')),
+                    const SnackBar(
+                      content: Text('Produto adicionado ao carrinho!'),
+                    ),
                   );
                 },
                 style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
@@ -132,4 +132,3 @@ class ProductDetailScreen extends StatelessWidget {
     );
   }
 }
-

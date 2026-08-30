@@ -4,8 +4,32 @@ import 'package:clickloja1/domain/produto.dart';
 import 'product_detail_screen.dart';
 import 'notification_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late Future<List<Produto>> _futureProdutos;
+  final ProdutoDao _dao = ProdutoDao();
+
+  @override
+  void initState() {
+    super.initState();
+    _carregarProdutos();
+  }
+
+  void _carregarProdutos() {
+    _futureProdutos = _dao.listarProdutos();
+  }
+
+  Future<void> _onRefresh() async {
+    setState(() {
+      _carregarProdutos();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +58,7 @@ class HomeScreen extends StatelessWidget {
       ),
 
       body: FutureBuilder<List<Produto>>(
-        future: ProdutoDao().listarProdutos(),
+        future: _futureProdutos,
         builder: (context, resultado) {
           if (resultado.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -43,18 +67,29 @@ class HomeScreen extends StatelessWidget {
             return const Center(child: Text("Erro ao carregar produtos."));
           }
 
-          List<Produto> produtos = resultado.data ?? [];
+          final List<Produto> produtos = resultado.data ?? [];
 
           if (produtos.isEmpty) {
-            return const Center(child: Text("Nenhum produto encontrado."));
+            return RefreshIndicator(
+              onRefresh: _onRefresh,
+              child: ListView(
+                children: const [
+                  SizedBox(height: 200),
+                  Center(child: Text("Nenhum produto encontrado.")),
+                ],
+              ),
+            );
           }
 
-          return ListView.builder(
-            padding: const EdgeInsets.all(16.0),
-            itemCount: produtos.length,
-            itemBuilder: (context, index) {
-              return _buildProdutoCard(context, produtos[index]);
-            },
+          return RefreshIndicator(
+            onRefresh: _onRefresh,
+            child: ListView.builder(
+              padding: const EdgeInsets.all(16.0),
+              itemCount: produtos.length,
+              itemBuilder: (context, index) {
+                return _buildProdutoCard(context, produtos[index]);
+              },
+            ),
           );
         },
       ),

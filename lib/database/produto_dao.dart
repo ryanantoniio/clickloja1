@@ -23,29 +23,9 @@ class ProdutoDao {
     Database db = await DBHelper().initDB();
 
     var listaResult = await db.rawQuery(
-      "SELECT * FROM PRODUTO WHERE titulo LIKE '%$query%';",
+      "SELECT * FROM PRODUTO WHERE titulo LIKE ?;",
+      ['%$query%'],
     );
-
-    List<Produto> listaProdutos = [];
-    for (var json in listaResult) {
-      Produto p = Produto.fromJson(json);
-      listaProdutos.add(p);
-    }
-
-    return listaProdutos;
-  }
-
-  Future<void> adicionarProdutoCarrinho(Produto p) async {
-    Database db = await DBHelper().initDB();
-
-    String sql = "INSERT INTO CARRINHO (titulo, preco, url) VALUES (?, ?, ?);";
-    await db.rawInsert(sql, [p.titulo, p.preco, p.url]);
-  }
-
-  Future<List<Produto>> listarCarrinho() async {
-    Database db = await DBHelper().initDB();
-
-    var listaResult = await db.rawQuery('SELECT * FROM CARRINHO;');
 
     List<Produto> listaProdutos = [];
     for (var json in listaResult) {

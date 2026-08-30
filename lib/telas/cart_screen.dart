@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:clickloja1/database/produto_dao.dart';
+import 'package:clickloja1/database/carrinho_dao.dart';
 import 'package:clickloja1/domain/produto.dart';
 
 class CartScreen extends StatefulWidget {
@@ -10,6 +10,36 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  late Future<List<Produto>> _futureCarrinho;
+  final CarrinhoDao _dao = CarrinhoDao();
+
+  @override
+  void initState() {
+    super.initState();
+    _carregarCarrinho();
+  }
+
+  void _carregarCarrinho() {
+    _futureCarrinho = _dao.listarCarrinho();
+  }
+
+  Future<void> _removerItem(int id) async {
+    await _dao.remover(id);
+    setState(() {
+      _carregarCarrinho();
+    });
+  }
+
+  double _calcularTotal(List<Produto> produtos) {
+    return produtos.fold(0.0, (total, p) {
+      final valor = double.tryParse(
+            p.preco.replaceAll('R\$', '').replaceAll('.', '').replaceAll(',', '.').trim(),
+          ) ??
+          0.0;
+      return total + valor;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +52,7 @@ class _CartScreenState extends State<CartScreen> {
         elevation: 0,
       ),
       body: FutureBuilder<List<Produto>>(
-        future: ProdutoDao().listarCarrinho(),
+        future: _futureCarrinho,
         builder: (context, resultado) {
           if (resultado.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -31,19 +61,49 @@ class _CartScreenState extends State<CartScreen> {
             return const Center(child: Text("Erro ao carregar o carrinho."));
           }
 
-          List<Produto> produtos = resultado.data ?? []; //pode vir nulo, por isso ?? []
+          final List<Produto> produtos = resultado.data ?? [];
 
           if (produtos.isEmpty) {
             return const Center(child: Text("Seu carrinho está vazio."));
           }
 
-          return ListView.builder(
-            padding: const EdgeInsets.all(16.0),
-            itemCount: produtos.length,
-            itemBuilder: (context, index) {
-              Produto p = produtos[index];
-              return _buildCartItem(p.titulo, p.preco, p.url, p.id);
-            },
+          final double total = _calcularTotal(produtos);
+
+          return Column(
+            children: [
+              // ── Lista de itens ──────────────────────────────────────────
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(16.0),
+                  itemCount: produtos.length,
+                  itemBuilder: (context, index) {
+                    final Produto p = produtos[index];
+                    return Dismissible(
+                      key: Key('produto_${p.id}_$index'),
+                      direction: DismissDirection.endToStart,
+                      onDismissed: (_) {
+                        if (p.id != null) {
+                          _removerItem(p.id!);
+                        }
+                      },
+                      background: Container(
+                        alignment: Alignment.centerRight,
+                        padding: const EdgeInsets.only(right: 20),
+                        decoration: BoxDecoration(
+                          color: Colors.red.shade400,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Icon(Icons.delete_outline, color: Colors.white, size: 28),
+                      ),
+                      child: _buildCartItem(p.titulo, p.preco, p.url, p.id),
+                    );
+                  },
+                ),
+              ),
+
+              // ── Rodapé com total e botão ────────────────────────────────
+              _buildFooter(total),
+            ],
           );
         },
       ),
@@ -65,7 +125,6 @@ class _CartScreenState extends State<CartScreen> {
                 width: 80,
                 height: 80,
                 fit: BoxFit.cover,
-
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
                     width: 80,
@@ -105,6 +164,74 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   ),
                 ],
+              ),
+            ),
+
+            // Dica visual de que o item é deslizável
+            const Icon(Icons.chevron_left, color: Colors.grey, size: 20),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFooter(double total) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 12,
+            offset: const Offset(0, -4),
+          ),
+        ],
+      ),
+      child: SafeArea(
+        top: false,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Total',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  'R\$ ${total.toStringAsFixed(2).replaceAll('.', ',')}',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 14),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Compra finalizada! 🎉')),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 0,
+                ),
+                child: const Text(
+                  'Finalizar Compra',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ],
