@@ -31,13 +31,7 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   double _calcularTotal(List<Produto> produtos) {
-    return produtos.fold(0.0, (total, p) {
-      final valor = double.tryParse(
-            p.preco.replaceAll('R\$', '').replaceAll('.', '').replaceAll(',', '.').trim(),
-          ) ??
-          0.0;
-      return total + valor;
-    });
+    return produtos.fold(0.0, (total, p) => total + p.preco);
   }
 
   @override
@@ -78,25 +72,7 @@ class _CartScreenState extends State<CartScreen> {
                   itemCount: produtos.length,
                   itemBuilder: (context, index) {
                     final Produto p = produtos[index];
-                    return Dismissible(
-                      key: Key('produto_${p.id}_$index'),
-                      direction: DismissDirection.endToStart,
-                      onDismissed: (_) {
-                        if (p.id != null) {
-                          _removerItem(p.id!);
-                        }
-                      },
-                      background: Container(
-                        alignment: Alignment.centerRight,
-                        padding: const EdgeInsets.only(right: 20),
-                        decoration: BoxDecoration(
-                          color: Colors.red.shade400,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: const Icon(Icons.delete_outline, color: Colors.white, size: 28),
-                      ),
-                      child: _buildCartItem(p.titulo, p.preco, p.url, p.id),
-                    );
+                    return _buildCartItem(p.titulo, p.preco, p.url, p.id);
                   },
                 ),
               ),
@@ -110,7 +86,7 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  Widget _buildCartItem(String titulo, String preco, String url, int? id) {
+  Widget _buildCartItem(String titulo, double preco, String url, int? id) {
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -156,7 +132,7 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    preco,
+                    'R\$ ${preco.toStringAsFixed(2).replaceAll('.', ',')}',
                     style: const TextStyle(
                       color: Colors.green,
                       fontSize: 16,

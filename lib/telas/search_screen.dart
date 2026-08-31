@@ -82,7 +82,7 @@ class _TelaPesquisaState extends State<TelaPesquisa> {
                 leading: const Icon(Icons.shopping_bag),
                 title: Text(p.titulo),
                 subtitle: Text(
-                  p.preco,
+                  'R\$ ${p.preco.toStringAsFixed(2).replaceAll('.', ',')}',
                   style: const TextStyle(color: Colors.green),
                 ),
                 onTap: () {

@@ -9,7 +9,7 @@ void main() {
       home: ProductDetailScreen(
         produto: Produto(
           titulo: "Camisa Seleção Brasileira",
-          preco: "R\$ 49,99",
+          preco: 49.99,
           url: "",
         ),
       ),
@@ -69,7 +69,7 @@ class ProductDetailScreen extends StatelessWidget {
             const SizedBox(height: 10),
 
             Text(
-              produto.preco,
+              'R\$ ${produto.preco.toStringAsFixed(2).replaceAll('.', ',')}',
               style: const TextStyle(
                 fontSize: 22,
                 color: Colors.green,

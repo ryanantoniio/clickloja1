@@ -14,7 +14,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController userController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -24,30 +23,16 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _entrar() async {
-    final String username = userController.text.trim();
-    final String password = passwordController.text.trim();
-
-    if (username.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Preencha usuário e senha.')),
-      );
-      return;
-    }
-
-    setState(() => _isLoading = true);
-
-    final bool sucesso = await UserDao().login(username, password);
-
-    setState(() => _isLoading = false);
-
+    final bool sucesso = await UserDao().login(
+      userController.text,
+      passwordController.text,
+    );
     if (sucesso) {
       await SharedPrefs().setUserStatus(true);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const MainNavigation()),
       );
-    } else {
-      print('Usuário ou senha incorretos');
     }
   }
 
@@ -116,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: _isLoading ? null : _entrar,
+                      onPressed: _entrar,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black87,
                         foregroundColor: Colors.white,
@@ -125,19 +110,10 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: _isLoading
-                          ? const SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 2,
-                              ),
-                            )
-                          : const Text(
-                              'Entrar',
-                              style: TextStyle(fontSize: 16),
-                            ),
+                      child: const Text(
+                        'Entrar',
+                        style: TextStyle(fontSize: 16),
+                      ),
                     ),
                   ),
                 ],

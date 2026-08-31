@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      produto.preco,
+                      'R\$ ${produto.preco.toStringAsFixed(2).replaceAll('.', ',')}',
                       style: const TextStyle(
                         color: Colors.green,
                         fontSize: 18,
