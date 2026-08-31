@@ -30,9 +30,6 @@ class _CartScreenState extends State<CartScreen> {
     });
   }
 
-  double _calcularTotal(List<Produto> produtos) {
-    return produtos.fold(0.0, (total, p) => total + p.preco);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,25 +58,13 @@ class _CartScreenState extends State<CartScreen> {
             return const Center(child: Text("Seu carrinho está vazio."));
           }
 
-          final double total = _calcularTotal(produtos);
-
-          return Column(
-            children: [
-              // ── Lista de itens ──────────────────────────────────────────
-              Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.all(16.0),
-                  itemCount: produtos.length,
-                  itemBuilder: (context, index) {
-                    final Produto p = produtos[index];
-                    return _buildCartItem(p.titulo, p.preco, p.url, p.id);
-                  },
-                ),
-              ),
-
-              // ── Rodapé com total e botão ────────────────────────────────
-              _buildFooter(total),
-            ],
+          return ListView.builder(
+            padding: const EdgeInsets.all(16.0),
+            itemCount: produtos.length,
+            itemBuilder: (context, index) {
+              final Produto p = produtos[index];
+              return _buildCartItem(p.titulo, p.preco, p.url, p.id);
+            },
           );
         },
       ),
@@ -158,66 +143,4 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  Widget _buildFooter(double total) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.08),
-            blurRadius: 12,
-            offset: const Offset(0, -4),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        top: false,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Total',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                ),
-                Text(
-                  'R\$ ${total.toStringAsFixed(2).replaceAll('.', ',')}',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.green,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 14),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // TODO: implementar finalização da compra
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 0,
-                ),
-                child: const Text(
-                  'Finalizar Compra',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
