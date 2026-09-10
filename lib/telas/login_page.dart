@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:clickloja1/database/user_dao.dart';
+import 'package:clickloja1/api/user_api.dart';
 import 'package:clickloja1/database/shared_prefs.dart';
 import 'main_navigation.dart';
 
@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _entrar() async {
-    final bool sucesso = await UserDao().login(
+    final bool sucesso = await UserApi().login(
       userController.text,
       passwordController.text,
     );
