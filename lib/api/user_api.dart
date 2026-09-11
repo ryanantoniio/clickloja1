@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import '../domain/user.dart';
 
 class UserApi {
   final Dio _dio = Dio();
@@ -20,6 +21,21 @@ class UserApi {
 
     throw Exception(
       'Falha ao autenticar. Status: ${response.statusCode}',
+    );
+  }
+
+  Future<List<User>> listar() async {
+    final Response response = await _dio.get(_url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = response.data as List<dynamic>;
+      return data
+          .map((json) => User.fromJson(json as Map<String, dynamic>))
+          .toList();
+    }
+
+    throw Exception(
+      'Falha ao carregar usuários. Status: ${response.statusCode}',
     );
   }
 }

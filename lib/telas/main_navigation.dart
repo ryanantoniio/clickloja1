@@ -44,7 +44,7 @@ class _MainNavigationState extends State<MainNavigation> {
             icon: Icon(Icons.shopping_cart),
             label: 'Carrinho',
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.api), label: 'APIs'),
+          BottomNavigationBarItem(icon: Icon(Icons.computer), label: 'APIs'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
         ],
       ),

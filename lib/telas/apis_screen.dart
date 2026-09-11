@@ -4,6 +4,7 @@ import 'banks_screen.dart';
 import 'banks_fake_screen.dart';
 import 'fake_store_screen.dart';
 import 'dummy_products_screen.dart';
+import 'users_fake_screen.dart';
 
 class ApisScreen extends StatelessWidget {
   const ApisScreen({super.key});
@@ -54,6 +55,12 @@ class ApisScreen extends StatelessWidget {
             title: const Text('DummyJSON Products'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _navegar(context, const DummyProductsScreen()),
+          ),
+          ListTile(
+            leading: const Icon(Icons.people),
+            title: const Text('Usuários (Fake API)'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => _navegar(context, const UsersFakeScreen()),
           ),
         ],
       ),
