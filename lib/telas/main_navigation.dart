@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'search_screen.dart';
 import 'cart_screen.dart';
+import 'apis_screen.dart';
 import 'profile_screen.dart';
 
 class MainNavigation extends StatefulWidget {
@@ -18,6 +19,7 @@ class _MainNavigationState extends State<MainNavigation> {
     const HomeScreen(),
     const TelaPesquisa(),
     const CartScreen(),
+    const ApisScreen(),
     const ProfileScreen(),
   ];
 
@@ -38,7 +40,11 @@ class _MainNavigationState extends State<MainNavigation> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Início'),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Pesquisar'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Carrinho'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: 'Carrinho',
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.api), label: 'APIs'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
         ],
       ),
