@@ -62,22 +62,14 @@ class _SplashPageState extends State<SplashPage> {
               style: TextStyle(
                 fontSize: 36,
                 fontWeight: FontWeight.bold,
-                color: Colors.black87,
+                color: Colors.black,
                 letterSpacing: 1.5,
               ),
             ),
-            const SizedBox(height: 8),
-            Text(
-              'Sua loja favorita',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[600],
-                letterSpacing: 0.5,
-              ),
-            ),
+
             const SizedBox(height: 48),
             const CircularProgressIndicator(
-              color: Colors.black54,
+              color: Colors.black,
               strokeWidth: 2,
             ),
           ],
