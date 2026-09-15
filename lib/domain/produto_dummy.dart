@@ -2,14 +2,14 @@ class ProdutoDummy {
   late int id;
   late String title;
   late double price;
-  late String brand;
+  String? brand;
   late String thumbnail;
 
   ProdutoDummy({
     required this.id,
     required this.title,
     required this.price,
-    required this.brand,
+    this.brand,
     required this.thumbnail,
   });
 

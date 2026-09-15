@@ -28,6 +28,11 @@ class _DummyProductsScreenState extends State<DummyProductsScreen> {
       body: FutureBuilder<List<ProdutoDummy>>(
         future: _futureProdutos,
         builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text('Erro: ${snapshot.error}'),
+            );
+          }
           if (snapshot.hasData) {
             final produtos = snapshot.data!;
             return ListView.builder(
@@ -42,7 +47,7 @@ class _DummyProductsScreenState extends State<DummyProductsScreen> {
                     fit: BoxFit.contain,
                   ),
                   title: Text(produto.title),
-                  subtitle: Text(produto.brand),
+                  subtitle: Text(produto.brand ?? 'Sem marca'),
                   trailing: Text(
                     'R\$ ${produto.price.toStringAsFixed(2)}',
                     style: const TextStyle(fontSize: 13, color: Colors.grey),
