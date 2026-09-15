@@ -17,7 +17,7 @@ class FakeStoreApi {
     }
 
     throw Exception(
-      'Falha ao carregar produtos. Status: ${response.statusCode}',
+      'Falha ao carregar produtos Status: ${response.statusCode}',
     );
   }
 }
