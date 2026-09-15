@@ -83,7 +83,5 @@ class DBHelper {
     ''';
     await db.execute(sqlUser);
 
-    await db.execute(
-        "INSERT INTO USER (username, password) VALUES ('teste@gmail.com', '123456');");
   }
 }

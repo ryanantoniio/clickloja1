@@ -27,11 +27,24 @@ class _LoginPageState extends State<LoginPage> {
       userController.text,
       passwordController.text,
     );
+
+    if (!mounted) return;
+
     if (sucesso) {
       await SharedPrefs().setUserStatus(true);
+      if (!mounted) return;
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const MainNavigation()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Falha ao encontrar usuário.'),
+          backgroundColor: Colors.grey,
+          duration: Duration (milliseconds: 1500),
+        ),
       );
     }
   }
@@ -39,7 +52,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Fundo cinza claro — igual ao scaffoldBackgroundColor do tema
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: const Text(

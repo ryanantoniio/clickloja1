@@ -7,9 +7,7 @@ class UserApi {
   static const String _url =
       'https://my-json-server.typicode.com/ryanantoniio/clickloja-fake-api/users';
 
-  /// Busca a lista de usuários da fake API e verifica se existe um usuário
-  /// com [username] e [password] correspondentes.
-  /// Retorna true se as credenciais forem válidas.
+  //busca a lista de usuários da fake api e verifica se existe um usuário
   Future<bool> login(String username, String password) async {
     final Response response = await _dio.get(_url);
 

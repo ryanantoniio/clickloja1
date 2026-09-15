@@ -18,7 +18,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _verificarLogin() async {
-    // Aguarda 2 segundos para exibir a splash
+    //aguarda 2 segundos para exibir a splash
     await Future.delayed(const Duration(seconds: 2));
 
     final bool logado = await SharedPrefs().getUserStatus();
